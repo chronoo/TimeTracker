@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Forms;
+using TimeTracker.Projects;
 
 namespace TimeTracker
 {
     public partial class MainWindow : Window
     {
         WindowState prevState;
-        public List<Work> ListData = new List<Work>();
+        public List<Work> taskList = new List<Work>();
+        public List<Project> projectList = new List<Project>();
         public MainWindow()
         {
             InitializeComponent();
 
-            ListData = getTaskList();
-            TaskList.ItemsSource = ListData;
+            taskList = getTaskList();
+            TaskList.ItemsSource = taskList;
 
             TaskList.DisplayMemberPath = "title";
             TaskList.SelectedValue = "id";

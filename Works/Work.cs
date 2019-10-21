@@ -16,10 +16,7 @@ namespace TimeTracker
         public Fields fields;
         public string title { get; set; }
     }
-}
 
-namespace TimeTracker
-{
     public class Fields
     {
         [JsonProperty(PropertyName = "System.Title")]

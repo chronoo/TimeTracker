@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Projects\Project.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Works\Work.cs" />
     <Compile Include="Works\WorksUtility.cs" />
