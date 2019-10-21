@@ -13,17 +13,41 @@
     <Grid>
         <Grid.RowDefinitions></Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition/>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+        <Button x:Name="SettingsButton" Width="36" Height="36" BorderThickness="0" Background="Transparent"
+                Click="SettingsButton_Click">
+            <StackPanel Margin="5">
+                <Image Source="Img/settings-cogwheel-button.png" 
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+            </StackPanel>
+        </Button>
         
-        <ComboBox x:Name="ProjectList" Margin="5" Grid.Column="0"></ComboBox>
-        <ComboBox x:Name="TaskList" Margin="5" Grid.Column="1"></ComboBox>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5" Grid.Column="2">
-            <Button x:Name="Start" Content="▷" Padding="5" BorderThickness="0" Background="Transparent" Height="25"/>
-            <Button x:Name="Pause" Content="⏯" Padding="5" BorderThickness="0" Background="Transparent" Height="25"/>
-            <Button x:Name="Stop" Content="◼" Padding="5" BorderThickness="0" Background="Transparent" Height="25"/>
+        <ComboBox x:Name="ProjectList" Margin="5" Grid.Column="1"></ComboBox>
+        <ComboBox x:Name="TaskList" Margin="5" Grid.Column="2"></ComboBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
+            <Button x:Name="Start" Padding="5" BorderThickness="0" Background="Transparent" Height="25" Width="25">
+                <StackPanel>
+                    <Image Source="Img/play-arrow.png" 
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="Pause" Padding="5" BorderThickness="0" Background="Transparent" Height="25" Width="25">
+                <StackPanel>
+                    <Image Source="Img/pause-button.png" 
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="Stop" Padding="5" BorderThickness="0" Background="Transparent" Height="25" Width="25">
+                <StackPanel>
+                    <Image Source="Img/stop-button.png" 
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
 
         <tb:TaskbarIcon Visibility="Visible"

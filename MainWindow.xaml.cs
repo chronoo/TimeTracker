@@ -63,6 +63,12 @@ namespace TimeTracker
             Show();
             WindowState = prevState;
         }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new SettingsWindow();
+            window.Show();
+        }
     }
     public class ComboData
     {

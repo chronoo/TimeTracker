@@ -98,6 +98,9 @@
     </ApplicationDefinition>
     <Compile Include="Projects\Project.cs" />
     <Compile Include="Projects\ProjectUtility.cs" />
+    <Compile Include="SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="Works\Work.cs" />
     <Compile Include="Works\WorkUtility.cs" />
@@ -113,6 +116,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -142,7 +149,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\repairing-service.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="clock.ico" />
   </ItemGroup>
@@ -157,6 +166,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\settings-cogwheel-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\pause-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\play-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\stop-button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
