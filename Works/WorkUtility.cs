@@ -13,18 +13,22 @@ namespace TimeTracker
             List<int> ids = new List<int>();
             worksID.ForEach(x => ids.Add(x.Id));
             string idList = string.Join(",", ids.ToArray());
+            var worksTitle = new List<Work>();
 
-            var Uri_getTitles = string.Format(@"https://dev.azure.com/{0}/{1}/_apis/wit/workitems?ids={2}&api-version=5.1", organization, project, idList);
-            using (WebClient wc = new WebClient())
-            {
-                wc.Encoding = Encoding.UTF8;
-                wc.Headers[HttpRequestHeader.ContentType] = "application/json";
-                wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + token)}";
-                HtmlResult = wc.DownloadString(Uri_getTitles);
+            try {
+                var Uri_getTitles = string.Format(@"https://dev.azure.com/{0}/{1}/_apis/wit/workitems?ids={2}&api-version=5.1", organization, project, idList);
+                using (WebClient wc = new WebClient()) {
+                    wc.Encoding = Encoding.UTF8;
+                    wc.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + token)}";
+                    HtmlResult = wc.DownloadString(Uri_getTitles);
+                }
+
+                var jObject = JObject.Parse(HtmlResult);
+                worksTitle = jObject["value"].ToObject<List<Work>>();
+            } catch (WebException) {
+
             }
-
-            var jObject = JObject.Parse(HtmlResult);
-            var worksTitle = jObject["value"].ToObject<List<Work>>();
 
             return worksTitle;
         }

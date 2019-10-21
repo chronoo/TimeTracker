@@ -15,14 +15,17 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0">Организация</Label>
         <Label Grid.Row="1" Grid.Column="0">Токен</Label>
+        <Label Grid.Row="2" Grid.Column="0">EMail</Label>
         <TextBox x:Name="Organization"  Grid.Row="0" Grid.Column="1" Margin="5"/>
         <TextBox x:Name="Token"  Grid.Row="1" Grid.Column="1" Margin="5"/>
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <TextBox x:Name="EMail"  Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="CancelButton" Padding="5" Margin="5" Click="CancelButton_Click">Отмена</Button>
             <Button x:Name="SaveButton" Padding="5" Margin="5" Click="SaveButton_Click">ОК</Button>
         </StackPanel>

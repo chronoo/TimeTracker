@@ -46,5 +46,17 @@ namespace TimeTracker.Properties {
                 this["Organization"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EMail {
+            get {
+                return ((string)(this["EMail"]));
+            }
+            set {
+                this["EMail"] = value;
+            }
+        }
     }
 }

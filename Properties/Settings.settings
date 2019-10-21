@@ -8,5 +8,8 @@
     <Setting Name="Organization" Type="System.String" Scope="User">
       <Value Profile="(Default)">ushakovad</Value>
     </Setting>
+    <Setting Name="EMail" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
