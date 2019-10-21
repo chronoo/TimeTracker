@@ -18,9 +18,13 @@ namespace TimeTracker
 
             taskList = getTaskList();
             TaskList.ItemsSource = taskList;
-
             TaskList.DisplayMemberPath = "title";
             TaskList.SelectedValue = "id";
+
+            projectList = getProjectList();
+            ProjectList.ItemsSource = projectList;          
+            ProjectList.DisplayMemberPath = "description"; // возможно, лучше использовать name
+            ProjectList.SelectedValuePath = "name";
         }
 
         private List<Work> getTaskList()
@@ -30,8 +34,19 @@ namespace TimeTracker
             var team            = ConfigurationManager.AppSettings["team"];
             var Base64Token     = ConfigurationManager.AppSettings["Base64Token"];
 
-            List<ComboData> worksID = WorksUtility.getWorksId(organization, project, team, Base64Token);
-            List<Work> worksTitle = WorksUtility.getWorksTitle(organization, project, Base64Token, worksID);
+            List<ComboData> worksID = WorkUtility.getWorksId(organization, project, team, Base64Token);
+            List<Work> worksTitle = WorkUtility.getWorksTitle(organization, project, Base64Token, worksID);
+            return worksTitle;
+        }
+
+        private List<Project> getProjectList()
+        {
+            var organization    = ConfigurationManager.AppSettings["organization"];
+            var project         = ConfigurationManager.AppSettings["project"];
+            var team            = ConfigurationManager.AppSettings["team"];
+            var Base64Token     = ConfigurationManager.AppSettings["Base64Token"];
+
+            List<Project> worksTitle = ProjectUtility.getProjectTitle(organization, Base64Token);
             return worksTitle;
         }
 

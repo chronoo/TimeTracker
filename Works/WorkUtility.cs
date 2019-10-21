@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TimeTracker
 {
-    public class WorksUtility
+    public class WorkUtility
     {
         public static List<Work> getWorksTitle(string organization, string project, string Base64Token, List<ComboData> worksID)
         {
