@@ -101,6 +101,7 @@
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\TaskUtility.cs" />
     <Compile Include="Teams\Team.cs" />
     <Compile Include="Teams\TeamUtility.cs" />
     <Compile Include="Utils.cs" />
