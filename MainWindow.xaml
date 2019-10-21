@@ -27,7 +27,7 @@
             </StackPanel>
         </Button>
         
-        <ComboBox x:Name="ProjectList" Margin="5" Grid.Column="1"></ComboBox>
+        <ComboBox x:Name="ProjectList" Margin="5" Grid.Column="1" SelectionChanged="ProjectList_SelectionChanged"></ComboBox>
         <ComboBox x:Name="TaskList" Margin="5" Grid.Column="2"></ComboBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3">
             <Button x:Name="Start" Padding="5" BorderThickness="0" Background="Transparent" Height="25" Width="25">

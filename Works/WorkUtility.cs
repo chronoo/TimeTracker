@@ -7,7 +7,7 @@ namespace TimeTracker
 {
     public class WorkUtility
     {
-        public static List<Work> getWorksTitle(string organization, string project, string Base64Token, List<ComboData> worksID)
+        public static List<Work> getWorksTitle(string organization, string project, string token, List<ComboData> worksID)
         {
             var HtmlResult = "";
             List<int> ids = new List<int>();
@@ -19,7 +19,7 @@ namespace TimeTracker
             {
                 wc.Encoding = Encoding.UTF8;
                 wc.Headers[HttpRequestHeader.ContentType] = "application/json";
-                wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Base64Token}";
+                wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + token)}";
                 HtmlResult = wc.DownloadString(Uri_getTitles);
             }
 
@@ -29,7 +29,7 @@ namespace TimeTracker
             return worksTitle;
         }
 
-        public static List<ComboData> getWorksId(string organization, string project, string team, string Base64Token)
+        public static List<ComboData> getWorksId(string organization, string project, string team, string token)
         {
             var HtmlResult = "";
             var Uri_getId = string.Format(@"https://dev.azure.com/{0}/{1}/{2}/_apis/wit/wiql?api-version=4.1", organization, project, team);
@@ -37,7 +37,7 @@ namespace TimeTracker
             using (WebClient wc = new WebClient())
             {
                 wc.Headers[HttpRequestHeader.ContentType] = "application/json";
-                wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Base64Token}";
+                wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + token)}";
                 HtmlResult = wc.UploadString(Uri_getId, postParameters);
             }
 

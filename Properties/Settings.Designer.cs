@@ -25,12 +25,25 @@ namespace TimeTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection TokenList {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Token {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["TokenList"]));
+                return ((string)(this["Token"]));
             }
             set {
-                this["TokenList"] = value;
+                this["Token"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ushakovad")]
+        public string Organization {
+            get {
+                return ((string)(this["Organization"]));
+            }
+            set {
+                this["Organization"] = value;
             }
         }
     }

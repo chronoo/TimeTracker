@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using TimeTracker.Projects;
+using TimeTracker.Teams;
 
 namespace TimeTracker
 {
@@ -15,38 +16,35 @@ namespace TimeTracker
         public MainWindow()
         {
             InitializeComponent();
+            updateProjectList();
+        }
 
-            taskList = getTaskList();
-            TaskList.ItemsSource = taskList;
-            TaskList.DisplayMemberPath = "title";
-            TaskList.SelectedValue = "id";
-
+        public void updateProjectList()
+        {
             projectList = getProjectList();
-            ProjectList.ItemsSource = projectList;          
+            ProjectList.ItemsSource = projectList;
             ProjectList.DisplayMemberPath = "description"; // возможно, лучше использовать name
             ProjectList.SelectedValuePath = "name";
         }
 
-        private List<Work> getTaskList()
+        private List<Work> getTaskList(string project)
         {
-            var organization    = ConfigurationManager.AppSettings["organization"];
-            var project         = ConfigurationManager.AppSettings["project"];
-            var team            = ConfigurationManager.AppSettings["team"];
-            var Base64Token     = ConfigurationManager.AppSettings["Base64Token"];
+            var organization    = Properties.Settings.Default.Organization;
+            var token           = Properties.Settings.Default.Token;
+            var team            = TeamUtility.getProjectTeam(organization, project, token);
 
-            List<ComboData> worksID = WorkUtility.getWorksId(organization, project, team, Base64Token);
-            List<Work> worksTitle = WorkUtility.getWorksTitle(organization, project, Base64Token, worksID);
+            List<ComboData> worksID = WorkUtility.getWorksId(organization, project, team, token);
+            List<Work> worksTitle = WorkUtility.getWorksTitle(organization, project, token, worksID);
+
             return worksTitle;
         }
 
         private List<Project> getProjectList()
         {
-            var organization    = ConfigurationManager.AppSettings["organization"];
-            var project         = ConfigurationManager.AppSettings["project"];
-            var team            = ConfigurationManager.AppSettings["team"];
-            var Base64Token     = ConfigurationManager.AppSettings["Base64Token"];
+            var organization = Properties.Settings.Default.Organization;
+            var token = Properties.Settings.Default.Token;
 
-            List<Project> worksTitle = ProjectUtility.getProjectTitle(organization, Base64Token);
+            List<Project> worksTitle = ProjectUtility.getProjectTitle(organization, token);
             return worksTitle;
         }
 
@@ -68,6 +66,15 @@ namespace TimeTracker
         {
             var window = new SettingsWindow();
             window.Show();
+        }
+
+        private void ProjectList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            string project = (sender as ComboBox).SelectedValue as string;
+            taskList = getTaskList(project);
+            TaskList.ItemsSource = taskList;
+            TaskList.DisplayMemberPath = "title";
+            TaskList.SelectedValue = "id";
         }
     }
     public class ComboData

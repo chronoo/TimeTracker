@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"
         SizeToContent="Height"
-        Height="400"
         Title="Настройки " Width="400">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
@@ -19,13 +18,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0">Организации</Label>
-        <Label Grid.Row="1" Grid.Column="0">Токены</Label>
-        <TextBox x:Name="OrganizationList"  Grid.Row="0" Grid.Column="1" Margin="5"/>
-        <TextBox x:Name="TokenList"  Grid.Row="1" Grid.Column="1" Margin="5"/>
+        <Label Grid.Row="0" Grid.Column="0">Организация</Label>
+        <Label Grid.Row="1" Grid.Column="0">Токен</Label>
+        <TextBox x:Name="Organization"  Grid.Row="0" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="Token"  Grid.Row="1" Grid.Column="1" Margin="5"/>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="CancelButton" Padding="5" Margin="5">Отмена</Button>
-            <Button x:Name="SaveButton" Padding="5" Margin="5">ОК</Button>
+            <Button x:Name="CancelButton" Padding="5" Margin="5" Click="CancelButton_Click">Отмена</Button>
+            <Button x:Name="SaveButton" Padding="5" Margin="5" Click="SaveButton_Click">ОК</Button>
         </StackPanel>
     </Grid>
 </Window>

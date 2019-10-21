@@ -6,25 +6,27 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeTracker.Projects
+namespace TimeTracker.Teams
 {
-    public class ProjectUtility
+    public class TeamUtility
     {
-        public static List<Project> getProjectTitle(string organization, string token)
+        public static string getProjectTeam(string organization, string project, string token)
         {
             var HtmlResult = "";
-            var Uri_getId = string.Format(@"https://dev.azure.com/{0}/_apis/projects?api-version=5.1", organization);
+
+            var Uri_getTitles = string.Format(@"https://dev.azure.com/{0}/_apis/teams?api-version=5.1-preview.3", organization);
             using (WebClient wc = new WebClient())
             {
                 wc.Encoding = Encoding.UTF8;
                 wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + token)}";
-                HtmlResult = wc.DownloadString(Uri_getId);
+                HtmlResult = wc.DownloadString(Uri_getTitles);
             }
 
             var jObject = JObject.Parse(HtmlResult);
-            var projectsTitle = jObject["value"].ToObject<List<Project>>();
+            var worksTitle = jObject["value"].ToObject<List<Team>>();
+            var team = worksTitle.Find(x => x.projectName == project).name;
 
-            return projectsTitle;
+            return team;
         }
     }
 }

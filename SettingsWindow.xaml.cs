@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace TimeTracker
 {
@@ -22,6 +10,21 @@ namespace TimeTracker
         public SettingsWindow()
         {
             InitializeComponent();
+            Organization.Text = Properties.Settings.Default.Organization;
+            Token.Text = Properties.Settings.Default.Token;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Organization = Organization.Text;
+            Properties.Settings.Default.Token = Token.Text;
+            Properties.Settings.Default.Save();
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
