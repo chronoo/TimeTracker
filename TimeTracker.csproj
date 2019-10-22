@@ -182,5 +182,8 @@
   <ItemGroup>
     <Resource Include="Img\stop-button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\clock.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

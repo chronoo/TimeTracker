@@ -64,7 +64,7 @@ namespace TimeTracker
                 @"Select [System.Id], [System.Title], [System.State] 
                 From WorkItems WHERE [System.TeamProject] = @Project 
                 AND ([System.WorkItemType] = 'Task' OR [System.WorkItemType] = 'Bug') 
-                AND [System.State] <> 'Closed' AND [System.ChangedBy] = '{0}'", eMail) }).ToString();
+                AND [System.State] <> 'Closed' AND [System.AssignedTo] = '{0}'", eMail) }).ToString();
 
             using (WebClient wc = new WebClient())
             {

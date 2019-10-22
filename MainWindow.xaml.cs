@@ -9,8 +9,14 @@ using TimeTracker.Teams;
 
 namespace TimeTracker {
     public partial class MainWindow : Window {
-        WindowState prevState;
-        DateTime startDate;
+        private const int NULL = -1;
+        private WindowState prevState;
+        private DateTime startDate;
+        private int currentWork = NULL;
+        private string currentProject;
+        private string organization = Properties.Settings.Default.Organization;
+        private string token = Properties.Settings.Default.Token;
+
         public List<Work> taskList = new List<Work>();
         public List<Project> projectList = new List<Project>();
         public MainWindow() {
@@ -71,6 +77,8 @@ namespace TimeTracker {
         private void ProjectList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             string project = (sender as ComboBox).SelectedValue as string;
             if (project != null) {
+                currentProject = project;
+
                 taskList = getTaskList(project);
                 TaskList.ItemsSource = taskList;
                 TaskList.DisplayMemberPath = "title";
@@ -79,29 +87,29 @@ namespace TimeTracker {
         }
 
         private void Start_Click(object sender, RoutedEventArgs e) {
-            startDate = DateTime.Now;
-        }
-
-        private void Pause_Click(object sender, RoutedEventArgs e) {
-            var work = (int) TaskList.SelectedValue;
-            var project = ProjectList.SelectedValue as string;
-            var token = Properties.Settings.Default.Token;
-            var organization = Properties.Settings.Default.Organization;
-            var currentDate = DateTime.Now;
-            var delta = (currentDate - startDate).TotalSeconds/3600;
-
-            TaskUtility.pause(work, organization, project, token, delta);
-        }
-
-        private void Stop_Click(object sender, RoutedEventArgs e) {
-            var work = (int)TaskList.SelectedValue;
-            var token = Properties.Settings.Default.Token;
-            var project = ProjectList.SelectedValue as string;
-            var organization = Properties.Settings.Default.Organization;
             var currentDate = DateTime.Now;
             var delta = (currentDate - startDate).TotalSeconds / 3600;
 
-            TaskUtility.stop(work, organization, project, token, delta);
+            startDate = DateTime.Now;
+            if (currentWork != NULL && currentWork != (int)TaskList.SelectedValue) { 
+                TaskUtility.pause(currentWork, organization, currentProject, token, delta);
+            }
+
+            currentWork = (int)TaskList.SelectedValue;
+        }
+
+        private void Pause_Click(object sender, RoutedEventArgs e) {
+            var currentDate = DateTime.Now;
+            var delta = (currentDate - startDate).TotalSeconds/3600;
+
+            TaskUtility.pause(currentWork, organization, currentProject, token, delta);
+        }
+
+        private void Stop_Click(object sender, RoutedEventArgs e) {
+            var currentDate = DateTime.Now;
+            var delta = (currentDate - startDate).TotalSeconds / 3600;
+
+            TaskUtility.stop(currentWork, organization, currentProject, token, delta);
         }
     }
     public class ComboData {
