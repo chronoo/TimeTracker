@@ -10,14 +10,15 @@ namespace TimeTracker.Projects
 {
     public class ProjectUtility
     {
-        public static List<Project> getProjectTitle(string organization, string token)
+        public static Connection connection { get; set; }
+        public static List<Project> getProjectTitle()
         {
             var HtmlResult = "";
-            var Uri_getId = string.Format(@"https://dev.azure.com/{0}/_apis/projects?api-version=5.1", organization);
+            var Uri_getId = string.Format(@"https://dev.azure.com/{0}/_apis/projects?api-version=5.1", connection.organization);
             using (WebClient wc = new WebClient())
             {
                 wc.Encoding = Encoding.UTF8;
-                wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + token)}";
+                wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + connection.token)}";
                 HtmlResult = wc.DownloadString(Uri_getId);
             }
 

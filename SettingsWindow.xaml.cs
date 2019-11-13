@@ -24,7 +24,7 @@ namespace TimeTracker
 
             Properties.Settings.Default.Save();
 
-            parentWindow.updateProjectList(); // надо переделать под оповещение формы
+            parentWindow.UpdateProjectList(); // надо переделать под оповещение формы
 
             Close();
         }

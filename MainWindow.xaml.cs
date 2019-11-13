@@ -17,12 +17,13 @@ namespace TimeTracker {
         private string currentProject;
         private string organization = Properties.Settings.Default.Organization;
         private string token = Properties.Settings.Default.Token;
+        private Connection connection = Connection.GetConnection();
 
         public List<Work> taskList = new List<Work>();
         public List<Project> projectList = new List<Project>();
         public MainWindow() {
             InitializeComponent();
-            updateProjectList();
+            UpdateProjectList();
 
             CommandBinding commandBinding = new CommandBinding();
             commandBinding.Command = ApplicationCommands.Open;
@@ -31,37 +32,39 @@ namespace TimeTracker {
             tbIcon.DoubleClickCommand = ApplicationCommands.Open;
         }
 
+        private void InitilizeConnection() {
+            WorkUtility.connection = connection;
+            ProjectUtility.connection = connection;
+            TeamUtility.connection = connection;
+            connection.updateConnection();
+        }
+
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) {
             Show();
             WindowState = prevState;
         }
 
-        public void updateProjectList() {
-            projectList = getProjectList();
+        public void UpdateProjectList() {
+            InitilizeConnection();
+
+            projectList = GetProjectList();
             ProjectList.ItemsSource = projectList;
             ProjectList.DisplayMemberPath = "description"; // возможно, лучше использовать name
             ProjectList.SelectedValuePath = "name";
         }
 
-        private List<Work> getTaskList(string project) {
-            var organization = Properties.Settings.Default.Organization;
-            var token = Properties.Settings.Default.Token;
-            var eMail = Properties.Settings.Default.EMail;
-            var team = TeamUtility.getProjectTeam(organization, project, token);
-
-            List<ComboData> worksID = WorkUtility.getWorksId(organization, project, team, token, eMail);
-            List<Work> worksTitle = WorkUtility.getWorksTitle(organization, project, token, worksID);
+        private List<Work> GetTaskList(string project) {
+            List<ComboData> worksID = WorkUtility.getWorksId();
+            List<Work> worksTitle = WorkUtility.getWorksTitle(worksID);
 
             return worksTitle;
         }
 
-        private List<Project> getProjectList() {
+        private List<Project> GetProjectList() {
             List<Project> worksTitle = new List<Project>();
-            var organization = Properties.Settings.Default.Organization;
-            var token = Properties.Settings.Default.Token;
 
             try {
-                worksTitle = ProjectUtility.getProjectTitle(organization, token);
+                worksTitle = ProjectUtility.getProjectTitle();
             } catch (Exception) {
                 MessageBox.Show("Проверьте настройки приложения", "Ошибка приложения", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -91,8 +94,10 @@ namespace TimeTracker {
             string project = (sender as ComboBox).SelectedValue as string;
             if (project != null) {
                 currentProject = project;
+                connection.project = project;
+                connection.team = TeamUtility.getProjectTeam();
 
-                taskList = getTaskList(project);
+                taskList = GetTaskList(project);
                 TaskList.ItemsSource = taskList;
                 TaskList.DisplayMemberPath = "title";
                 TaskList.SelectedValuePath = "id";
@@ -105,7 +110,7 @@ namespace TimeTracker {
 
             startDate = DateTime.Now;
             if (currentWork != NULL && currentWork != (int)TaskList.SelectedValue) { 
-                TaskUtility.pause(currentWork, organization, currentProject, token, delta);
+                TaskUtility.pause(currentWork, delta);
             }
 
             currentWork = (int)TaskList.SelectedValue;
@@ -116,7 +121,7 @@ namespace TimeTracker {
             var currentDate = DateTime.Now;
             var delta = (currentDate - startDate).TotalSeconds/3600;
 
-            TaskUtility.pause(currentWork, organization, currentProject, token, delta);
+            TaskUtility.pause(currentWork, delta);
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e) {
@@ -126,7 +131,7 @@ namespace TimeTracker {
             TaskUtility.stop(currentWork, organization, currentProject, token, delta);
         }
 
-        private void showTray_Click(object sender, RoutedEventArgs e) {
+        private void ShowTray_Click(object sender, RoutedEventArgs e) {
             Show();
             WindowState = prevState;
         }

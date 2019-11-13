@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Connection.cs" />
     <Compile Include="Projects\Project.cs" />
     <Compile Include="Projects\ProjectUtility.cs" />
     <Compile Include="SettingsWindow.xaml.cs">

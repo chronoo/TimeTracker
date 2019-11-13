@@ -63,7 +63,7 @@
                         x:Name="tbIcon">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name ="showTray"  Header="Развернуть" Click="showTray_Click"></MenuItem>
+                    <MenuItem x:Name ="showTray"  Header="Развернуть" Click="ShowTray_Click"></MenuItem>
                     <Separator></Separator>
                     <MenuItem x:Name="playTray" Header="Взять в работу" Click="Start_Click"></MenuItem>
                     <MenuItem x:Name="pauseTray" Header="Приостановить" Click="Pause_Click"></MenuItem>
