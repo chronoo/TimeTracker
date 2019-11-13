@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using TimeTracker.Projects;
 using TimeTracker.Tasks;
 using TimeTracker.Teams;
@@ -22,6 +23,17 @@ namespace TimeTracker {
         public MainWindow() {
             InitializeComponent();
             updateProjectList();
+
+            CommandBinding commandBinding = new CommandBinding();
+            commandBinding.Command = ApplicationCommands.Open;
+            commandBinding.Executed += CommandBinding_Executed;
+
+            tbIcon.DoubleClickCommand = ApplicationCommands.Open;
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) {
+            Show();
+            WindowState = prevState;
         }
 
         public void updateProjectList() {
@@ -69,8 +81,9 @@ namespace TimeTracker {
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            var window = new SettingsWindow();
-            window.parentWindow = this;
+            var window = new SettingsWindow {
+                parentWindow = this
+            };
             window.Show();
         }
 
@@ -96,6 +109,7 @@ namespace TimeTracker {
             }
 
             currentWork = (int)TaskList.SelectedValue;
+            TaskUtility.play(currentWork, organization, currentProject, token);
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e) {
@@ -110,6 +124,11 @@ namespace TimeTracker {
             var delta = (currentDate - startDate).TotalSeconds / 3600;
 
             TaskUtility.stop(currentWork, organization, currentProject, token, delta);
+        }
+
+        private void showTray_Click(object sender, RoutedEventArgs e) {
+            Show();
+            WindowState = prevState;
         }
     }
     public class ComboData {

@@ -7,6 +7,8 @@
         xmlns:local="clr-namespace:TimeTracker"
         mc:Ignorable="d"    
         Width="500"
+        MinHeight="72"
+        MaxHeight="72"
         SizeToContent="Height"
         Title="Time tracker" 
         StateChanged="Window_StateChanged">
@@ -57,6 +59,16 @@
         <tb:TaskbarIcon Visibility="Visible"
                         ToolTipText="Time tracker" 
                         IconSource="Img\clock.ico" 
-                        MouseLeftButtonUp="TaskbarIcon_MouseLeftButtonDown"/>
+                        MenuActivation ="RightClick"
+                        x:Name="tbIcon">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name ="showTray"  Header="Развернуть" Click="showTray_Click"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem x:Name="playTray" Header="Взять в работу" Click="Start_Click"></MenuItem>
+                    <MenuItem x:Name="pauseTray" Header="Приостановить" Click="Pause_Click"></MenuItem>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
     </Grid>
 </Window>
