@@ -60,6 +60,7 @@
                         ToolTipText="Time tracker" 
                         IconSource="Img\clock.ico" 
                         MenuActivation ="RightClick"
+                        TrayMouseDoubleClick="ShowTray_Click"
                         x:Name="tbIcon">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>

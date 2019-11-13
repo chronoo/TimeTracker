@@ -72,8 +72,9 @@ namespace TimeTracker {
         private void Window_StateChanged(object sender, EventArgs e) {
             if (WindowState == WindowState.Minimized)
                 Hide();
-            else
+            else {
                 prevState = WindowState;
+            }
         }
 
         private void TaskbarIcon_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) {
@@ -132,6 +133,11 @@ namespace TimeTracker {
         private void ShowTray_Click(object sender, RoutedEventArgs e) {
             Show();
             WindowState = prevState;
+
+            Activate();
+            Topmost = true;
+            Topmost = false;
+            Focus();
         }
     }
     public class ComboData {
