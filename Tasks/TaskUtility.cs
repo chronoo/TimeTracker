@@ -15,19 +15,21 @@ namespace TimeTracker.Tasks {
             changeWorkCurrentState(work, State.Pause);
         }
 
-        public static void play(int work, string organization, string project, string token) {
+        public static void play(int work) {
             changeWorkCurrentState(work, State.Play);
         }
 
-        public static void stop(int work, string organization, string project, string token, double delta) {
+        public static void stop(int work, double delta) {
             changeWorkState(work, State.Stop, delta);
             changeWorkCurrentState(work, State.Stop);
         }
 
         public static void changeWorkCurrentState(int work, State state) {
-            var currentTime = WorkUtility.getWorkTime(work);
-            var localState = getLocalState(state);
-            changeWorkField(work, "/fields/Custom.9c5f55a3-cb5b-4dd3-b28e-57d194609601", localState);
+            if (connection.area != "") {
+                var currentTime = WorkUtility.getWorkTime(work);
+                var localState = getLocalState(state);
+                changeWorkField(work, connection.area, localState);
+            }
         }
 
         public static void changeWorkState(int work, State state, double delta) {
@@ -64,6 +66,26 @@ namespace TimeTracker.Tasks {
             var localState = states[state];
 
             return localState;
+        }
+
+        public static string getArea() {
+            var arrea = "";
+            var HtmlResult = "";
+
+            try {
+                var Uri_getTitles = string.Format(@"https://dev.azure.com/{0}/{1}/_apis/wit/fields/{2}?api-version=5.1", connection.organization, connection.project, "Текущий статус");
+                using (WebClient wc = new WebClient()) {
+                    wc.Encoding = Encoding.UTF8;
+                    wc.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    wc.Headers[HttpRequestHeader.Authorization] = $"Basic {Utils.Base64Encode(":" + connection.token)}";
+                    HtmlResult = wc.DownloadString(Uri_getTitles);
+                }
+
+                var jObject = JObject.Parse(HtmlResult);
+                arrea = "/fields/" + jObject["referenceName"].ToString();
+            } catch (WebException) {
+            }
+            return arrea;
         }
     }
     public enum State {

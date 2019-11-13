@@ -14,13 +14,10 @@ namespace TimeTracker {
         private WindowState prevState;
         private DateTime startDate;
         private int currentWork = NULL;
-        private string currentProject;
-        private string organization = Properties.Settings.Default.Organization;
-        private string token = Properties.Settings.Default.Token;
         private Connection connection = Connection.GetConnection();
-
         public List<Work> taskList = new List<Work>();
         public List<Project> projectList = new List<Project>();
+
         public MainWindow() {
             InitializeComponent();
             UpdateProjectList();
@@ -36,6 +33,7 @@ namespace TimeTracker {
             WorkUtility.connection = connection;
             ProjectUtility.connection = connection;
             TeamUtility.connection = connection;
+            TaskUtility.connection = connection;
             connection.updateConnection();
         }
 
@@ -93,9 +91,9 @@ namespace TimeTracker {
         private void ProjectList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             string project = (sender as ComboBox).SelectedValue as string;
             if (project != null) {
-                currentProject = project;
                 connection.project = project;
                 connection.team = TeamUtility.getProjectTeam();
+                connection.area = TaskUtility.getArea();
 
                 taskList = GetTaskList(project);
                 TaskList.ItemsSource = taskList;
@@ -114,7 +112,7 @@ namespace TimeTracker {
             }
 
             currentWork = (int)TaskList.SelectedValue;
-            TaskUtility.play(currentWork, organization, currentProject, token);
+            TaskUtility.play(currentWork);
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e) {
@@ -128,7 +126,7 @@ namespace TimeTracker {
             var currentDate = DateTime.Now;
             var delta = (currentDate - startDate).TotalSeconds / 3600;
 
-            TaskUtility.stop(currentWork, organization, currentProject, token, delta);
+            TaskUtility.stop(currentWork, delta);
         }
 
         private void ShowTray_Click(object sender, RoutedEventArgs e) {

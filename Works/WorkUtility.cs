@@ -76,6 +76,7 @@ namespace TimeTracker
 
             var jObject = JObject.Parse(HtmlResult);
             var worksID = jObject["workItems"].ToObject<List<ComboData>>();
+            worksID.Reverse();
 
             return worksID;
         }

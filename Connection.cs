@@ -12,6 +12,7 @@ namespace TimeTracker {
         public string token { get; set; }
         public string eMail { get; set; }
         public string team { get; set; }
+        public string area { get; set; }
 
         private Connection() { }
 
