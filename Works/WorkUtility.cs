@@ -9,7 +9,7 @@ namespace TimeTracker
     public class WorkUtility
     {
         public static Connection connection { get; set; }
-        public static List<Work> getWorksTitle(List<ComboData> worksID)
+        public static List<Work> GetWorksTitle(List<ComboData> worksID)
         {
             var HtmlResult = "";
             List<int> ids = new List<int>();
@@ -35,7 +35,7 @@ namespace TimeTracker
             return worksTitle;
         }
 
-        public static double getWorkTime(int workId) {
+        public static double GetWorkTime(int workId) {
             var HtmlResult = "";
             Work work = default;
 
@@ -57,7 +57,7 @@ namespace TimeTracker
             return work.time;
         }
 
-        public static List<ComboData> getWorksId()
+        public static List<ComboData> GetWorksId()
         {
             var HtmlResult = "";
             var Uri_getId = string.Format(@"https://dev.azure.com/{0}/{1}/{2}/_apis/wit/wiql?api-version=4.1", connection.organization, connection.project, connection.team);

@@ -11,7 +11,7 @@ namespace TimeTracker.Teams
     public class TeamUtility
     {
         public static Connection connection { get; set; }
-        public static string getProjectTeam()
+        public static string GetProjectTeam()
         {
             var HtmlResult = "";
 

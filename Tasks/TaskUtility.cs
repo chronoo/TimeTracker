@@ -10,37 +10,37 @@ using System.Threading.Tasks;
 namespace TimeTracker.Tasks {
     public class TaskUtility {
         public static Connection connection { get; set; }
-        public static void pause(int work, double delta) {
-            changeWorkState(work, State.Pause, delta);
-            changeWorkCurrentState(work, State.Pause);
+        public static void Pause(int work, double delta) {
+            ChangeWorkState(work, State.Pause, delta);
+            ChangeWorkCurrentState(work, State.Pause);
         }
 
-        public static void play(int work) {
-            changeWorkCurrentState(work, State.Play);
+        public static void Play(int work) {
+            ChangeWorkCurrentState(work, State.Play);
         }
 
-        public static void stop(int work, double delta) {
-            changeWorkState(work, State.Stop, delta);
-            changeWorkCurrentState(work, State.Stop);
+        public static void Stop(int work, double delta) {
+            ChangeWorkState(work, State.Stop, delta);
+            ChangeWorkCurrentState(work, State.Stop);
         }
 
-        public static void changeWorkCurrentState(int work, State state) {
+        public static void ChangeWorkCurrentState(int work, State state) {
             if (connection.area != "") {
-                var currentTime = WorkUtility.getWorkTime(work);
-                var localState = getLocalState(state);
-                changeWorkField(work, connection.area, localState);
+                var currentTime = WorkUtility.GetWorkTime(work);
+                var localState = GetLocalState(state);
+                ChangeWorkField(work, connection.area, localState);
             }
         }
 
-        public static void changeWorkState(int work, State state, double delta) {
-            var currentTime = WorkUtility.getWorkTime(work);
+        public static void ChangeWorkState(int work, State state, double delta) {
+            var currentTime = WorkUtility.GetWorkTime(work);
             var value = currentTime + delta;
-            changeWorkField(work, "/fields/Microsoft.VSTS.Scheduling.CompletedWork", value);
+            ChangeWorkField(work, "/fields/Microsoft.VSTS.Scheduling.CompletedWork", value);
         }
 
         // TODO: сделать заполнение из списка свойств
-        private static void changeWorkField(int work, string path, object value) {
-            var currentTime = WorkUtility.getWorkTime(work);
+        private static void ChangeWorkField(int work, string path, object value) {
+            var currentTime = WorkUtility.GetWorkTime(work);
 
             var Uri_getId = string.Format(@"https://dev.azure.com/{0}/{1}/_apis/wit/workitems/{2}?api-version=5.1", connection.organization, connection.project, work);
             var postParameters = JArray.FromObject(new[]{new {
@@ -56,7 +56,7 @@ namespace TimeTracker.Tasks {
             }
         }
 
-        private static string getLocalState(State state) {
+        private static string GetLocalState(State state) {
             Dictionary<State, string> states = new Dictionary<State, string> {
                 { State.Play, "Active" },
                 { State.Pause, "Pause" },
@@ -68,7 +68,7 @@ namespace TimeTracker.Tasks {
             return localState;
         }
 
-        public static string getArea() {
+        public static string GetArea() {
             var arrea = "";
             var HtmlResult = "";
 

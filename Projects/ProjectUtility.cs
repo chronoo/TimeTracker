@@ -11,7 +11,7 @@ namespace TimeTracker.Projects
     public class ProjectUtility
     {
         public static Connection connection { get; set; }
-        public static List<Project> getProjectTitle()
+        public static List<Project> GetProjectTitle()
         {
             var HtmlResult = "";
             var Uri_getId = string.Format(@"https://dev.azure.com/{0}/_apis/projects?api-version=5.1", connection.organization);

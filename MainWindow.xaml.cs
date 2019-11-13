@@ -52,8 +52,8 @@ namespace TimeTracker {
         }
 
         private List<Work> GetTaskList(string project) {
-            List<ComboData> worksID = WorkUtility.getWorksId();
-            List<Work> worksTitle = WorkUtility.getWorksTitle(worksID);
+            List<ComboData> worksID = WorkUtility.GetWorksId();
+            List<Work> worksTitle = WorkUtility.GetWorksTitle(worksID);
 
             return worksTitle;
         }
@@ -62,7 +62,7 @@ namespace TimeTracker {
             List<Project> worksTitle = new List<Project>();
 
             try {
-                worksTitle = ProjectUtility.getProjectTitle();
+                worksTitle = ProjectUtility.GetProjectTitle();
             } catch (Exception) {
                 MessageBox.Show("Проверьте настройки приложения", "Ошибка приложения", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -92,8 +92,8 @@ namespace TimeTracker {
             string project = (sender as ComboBox).SelectedValue as string;
             if (project != null) {
                 connection.project = project;
-                connection.team = TeamUtility.getProjectTeam();
-                connection.area = TaskUtility.getArea();
+                connection.team = TeamUtility.GetProjectTeam();
+                connection.area = TaskUtility.GetArea();
 
                 taskList = GetTaskList(project);
                 TaskList.ItemsSource = taskList;
@@ -108,25 +108,25 @@ namespace TimeTracker {
 
             startDate = DateTime.Now;
             if (currentWork != NULL && currentWork != (int)TaskList.SelectedValue) { 
-                TaskUtility.pause(currentWork, delta);
+                TaskUtility.Pause(currentWork, delta);
             }
 
             currentWork = (int)TaskList.SelectedValue;
-            TaskUtility.play(currentWork);
+            TaskUtility.Play(currentWork);
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e) {
             var currentDate = DateTime.Now;
             var delta = (currentDate - startDate).TotalSeconds/3600;
 
-            TaskUtility.pause(currentWork, delta);
+            TaskUtility.Pause(currentWork, delta);
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e) {
             var currentDate = DateTime.Now;
             var delta = (currentDate - startDate).TotalSeconds / 3600;
 
-            TaskUtility.stop(currentWork, delta);
+            TaskUtility.Stop(currentWork, delta);
         }
 
         private void ShowTray_Click(object sender, RoutedEventArgs e) {
