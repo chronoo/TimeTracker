@@ -73,7 +73,7 @@ namespace TimeTracker.Tasks {
             var HtmlResult = "";
 
             try {
-                var Uri_getTitles = string.Format(@"https://dev.azure.com/{0}/{1}/_apis/wit/fields/{2}?api-version=5.1", connection.organization, connection.project, "Текущий статус");
+                var Uri_getTitles = string.Format(@"https://dev.azure.com/{0}/{1}/_apis/wit/fields/{2}?api-version=5.1", connection.organization, connection.project, "Current status");
                 using (WebClient wc = new WebClient()) {
                     wc.Encoding = Encoding.UTF8;
                     wc.Headers[HttpRequestHeader.ContentType] = "application/json";

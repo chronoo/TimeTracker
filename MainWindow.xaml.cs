@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using TimeTracker.Projects;
 using TimeTracker.Tasks;
 using TimeTracker.Teams;
@@ -114,6 +115,9 @@ namespace TimeTracker {
 
             currentWork = (int)TaskList.SelectedValue;
             TaskUtility.Play(currentWork);
+
+            Start.Background = new SolidColorBrush(Colors.Gray);
+            Pause.Background = new SolidColorBrush(Colors.Transparent);
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e) {
@@ -121,6 +125,9 @@ namespace TimeTracker {
             var delta = (currentDate - startDate).TotalSeconds/3600;
 
             TaskUtility.Pause(currentWork, delta);
+
+            Start.Background = new SolidColorBrush(Colors.Transparent);
+            Pause.Background = new SolidColorBrush(Colors.Gray);
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e) {
@@ -135,8 +142,8 @@ namespace TimeTracker {
             WindowState = prevState;
 
             Activate();
-            Topmost = true;
-            Topmost = false;
+            /*Topmost = true;
+            Topmost = false;*/
             Focus();
         }
     }

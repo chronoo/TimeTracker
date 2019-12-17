@@ -11,6 +11,7 @@
         MaxHeight="72"
         SizeToContent="Height"
         Title="Time tracker" 
+        Topmost="True"
         StateChanged="Window_StateChanged">
     <Grid>
         <Grid.RowDefinitions></Grid.RowDefinitions>
